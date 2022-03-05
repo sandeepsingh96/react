@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Skeleton from "react-loading-skeleton";
+import { NavLink } from "react-router-dom";
 const Products = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
@@ -41,15 +42,44 @@ const Products = () => {
       </>
     );
   };
+  const filterProduct = (cat) => {
+    const updatedList = data.filter((x) => x.category === cat);
+    setFilter(updatedList);
+  };
   const ShowProducts = () => {
     return (
       <>
         <div className="buttons d-flex justify-content-center mb-5 pb-5">
-          <button className="btn btn-outline-dark me-2">All</button>
-          <button className="btn btn-outline-dark me-2">Men Clothes</button>
-          <button className="btn btn-outline-dark me-2">Women Clothes</button>
-          <button className="btn btn-outline-dark me-2">Jewellery</button>
-          <button className="btn btn-outline-dark me-2">Electronics</button>
+          <button
+            className="btn btn-outline-dark me-2"
+            onClick={() => setFilter(data)}
+          >
+            All
+          </button>
+          <button
+            className="btn btn-outline-dark me-2"
+            onClick={() => filterProduct("men's clothing")}
+          >
+            Men Clothes
+          </button>
+          <button
+            className="btn btn-outline-dark me-2"
+            onClick={() => filterProduct("women's clothing")}
+          >
+            Women Clothes
+          </button>
+          <button
+            className="btn btn-outline-dark me-2"
+            onClick={() => filterProduct("jewelery")}
+          >
+            Jewelery
+          </button>
+          <button
+            className="btn btn-outline-dark me-2"
+            onClick={() => filterProduct("electronics")}
+          >
+            Electronics
+          </button>
         </div>
         {filter.map((product) => {
           return (
@@ -67,9 +97,12 @@ const Products = () => {
                       {product.title.substring(0, 12)}...
                     </h5>
                     <p className="card-text lead fw-bold">${product.price}</p>
-                    <a href="#" className="btn btn-outline-dark">
+                    <NavLink
+                      to={`/products/${product.id}`}
+                      className="btn btn-outline-dark"
+                    >
                       Buy
-                    </a>
+                    </NavLink>
                   </div>
                 </div>
               </div>
